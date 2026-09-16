@@ -1,3 +1,447 @@
+/* ==========================================================================
+   Smitty Site — stylesheet
+   Sections: tokens, reset, layout, header/nav, about, projects, links,
+             footer, responsive
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Design tokens
+   -------------------------------------------------------------------------- */
+
+:root {
+    /* Neutrals */
+    --bg: #f7f8fa;
+    --surface: #ffffff;
+    --border: #e3e6ec;
+    --text: #16191f;
+    --text-muted: #5c6472;
+
+    /* Accent */
+    --accent: #2f5de3;
+    --accent-hover: #2348bd;
+    --accent-soft: #eaefff;
+
+    /* Type */
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+            "Helvetica Neue", Arial, sans-serif;
+
+    /* Space & shape */
+    --page-max: clamp(20rem, 92vw, 64rem);
+    --gap: 1rem;
+    --radius: 12px;
+    --radius-pill: 999px;
+
+    /* Depth */
+    --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.05);
+    --shadow-md: 0 6px 20px rgba(16, 24, 40, 0.09);
+
+    /* Sticky header offset for anchor jumps */
+    --header-h: 4.5rem;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #101319;
+        --surface: #171b23;
+        --border: #272d38;
+        --text: #eef1f6;
+        --text-muted: #a2abbb;
+
+        --accent: #7d9bff;
+        --accent-hover: #9bb2ff;
+        --accent-soft: #1d2537;
+
+        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+        --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.45);
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Reset & base
+   -------------------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
 body {
-    background-color: lightblue;
+    margin: 0;
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 1rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+    line-height: 1.2;
+    margin: 0;
+    letter-spacing: -0.02em;
+}
+
+p {
+    margin: 0;
+}
+
+/* The Motion Worship description is still an empty placeholder — don't
+   let it open a gap in the card until the copy lands. */
+p:empty {
+    display: none;
+}
+
+a {
+    color: var(--accent);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    transition: color 0.15s ease;
+}
+
+a:hover {
+    color: var(--accent-hover);
+}
+
+:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   Layout
+   -------------------------------------------------------------------------- */
+
+main {
+    width: var(--page-max);
+    margin-inline: auto;
+    padding-inline: 1rem;
+}
+
+main > section {
+    padding-block: clamp(2.5rem, 6vw, 4.5rem);
+    scroll-margin-top: var(--header-h);
+}
+
+main > section + section {
+    border-top: 1px solid var(--border);
+}
+
+main > section > h2 {
+    font-size: clamp(1.6rem, 4vw, 2.1rem);
+    margin-bottom: 2rem;
+    position: relative;
+    padding-bottom: 0.65rem;
+}
+
+/* Short accent rule under each section heading */
+main > section > h2::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 2.75rem;
+    height: 3px;
+    border-radius: var(--radius-pill);
+    background: var(--accent);
+}
+
+main h3 {
+    font-size: 1.15rem;
+}
+
+/* --------------------------------------------------------------------------
+   Header & nav
+   -------------------------------------------------------------------------- */
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gap);
+    min-height: var(--header-h);
+    padding: 0.9rem 1.5rem;
+    background: color-mix(in srgb, var(--surface) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+}
+
+header h1 {
+    font-size: 1.2rem;
+    font-weight: 650;
+}
+
+/* <span> around "Ethan" in the greeting */
+header h1 span {
+    color: var(--accent);
+}
+
+header nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+header nav a {
+    display: block;
+    padding: 0.4rem 0.8rem;
+    border-radius: var(--radius-pill);
+    color: var(--text-muted);
+    font-size: 0.925rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+header nav a:hover {
+    background: var(--accent-soft);
+    color: var(--accent);
+}
+
+/* --------------------------------------------------------------------------
+   About
+   -------------------------------------------------------------------------- */
+
+#about-me h3 {
+    margin-top: 2rem;
+    margin-bottom: 0.6rem;
+}
+
+#about-me ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.6rem;
+    max-width: 60ch;
+}
+
+#about-me li {
+    position: relative;
+    padding-left: 1.35rem;
+    color: var(--text-muted);
+}
+
+#about-me li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.72em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+}
+
+/* Resume download — the only PDF link on the page */
+#about-me a[href$=".pdf"] {
+    display: inline-block;
+    margin-top: 1.5rem;
+    padding: 0.65rem 1.3rem;
+    border-radius: var(--radius-pill);
+    background: var(--accent);
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: var(--shadow-sm);
+    transition: background-color 0.15s ease, transform 0.15s ease,
+                box-shadow 0.15s ease;
+}
+
+#about-me a[href$=".pdf"]:hover {
+    background: var(--accent-hover);
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+/* --------------------------------------------------------------------------
+   Projects
+   -------------------------------------------------------------------------- */
+
+#projects {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+    align-items: start;
+}
+
+/* Heading spans the card grid */
+#projects > h2 {
+    grid-column: 1 / -1;
+    margin-bottom: 0.75rem;
+}
+
+#projects article {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    height: 100%;
+    padding: 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.18s ease, box-shadow 0.18s ease,
+                border-color 0.18s ease;
+}
+
+#projects article:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+    box-shadow: var(--shadow-md);
+}
+
+#projects article h3 {
+    margin-bottom: -0.25rem;
+}
+
+/* Status badge ("Completed" / "In Development") */
+#projects article > span {
+    align-self: flex-start;
+    padding: 0.2rem 0.7rem;
+    border-radius: var(--radius-pill);
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: 0.775rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+/* "Technologies used:" label */
+#projects article p:first-of-type {
+    color: var(--text-muted);
+    font-size: 0.775rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: -0.25rem;
+}
+
+/* Tech stack chips */
+#projects article ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#projects article li {
+    padding: 0.2rem 0.6rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--bg);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+/* Description */
+#projects article p:last-of-type {
+    color: var(--text-muted);
+}
+
+/* Push the link row to the bottom so cards align on a row */
+#projects article a:first-of-type {
+    margin-top: auto;
+}
+
+#projects article a {
+    font-size: 0.925rem;
+    font-weight: 500;
+    text-decoration: none;
+    width: fit-content;
+}
+
+#projects article a:hover {
+    text-decoration: underline;
+}
+
+/* --------------------------------------------------------------------------
+   Links
+   -------------------------------------------------------------------------- */
+
+#links ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#links a {
+    display: inline-block;
+    padding: 0.6rem 1.4rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
+    font-weight: 500;
+    text-decoration: none;
+    box-shadow: var(--shadow-sm);
+    transition: border-color 0.15s ease, transform 0.15s ease,
+                box-shadow 0.15s ease;
+}
+
+#links a:hover {
+    border-color: var(--accent);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+/* --------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------- */
+
+footer {
+    padding: 2rem 1rem 3rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    text-align: center;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive & motion
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 34rem) {
+    header {
+        justify-content: center;
+        padding-inline: 1rem;
+        text-align: center;
+    }
+
+    #projects {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
 }
